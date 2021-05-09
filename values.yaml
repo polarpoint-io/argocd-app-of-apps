@@ -1,0 +1,24 @@
+   # Global configuration for all applications
+  # defaults and constants
+  # default cluster and namespace here is the argocd cluster and namespace
+
+  global:
+    namespace: argocd
+    defaultCluster: https://kubernetes.default.svc
+    syncPolicy:
+      automated:
+        prune: false
+        selfHeal: false
+  projects:
+    default: default
+  # TODO argocd projects
+
+  # applications with parameters
+  applications:
+    monitoring:
+      enabled: true
+      name: monitoring
+      path: applications
+      url: 'git@github.com:polarpoint-io/devops-argocd-monitoring-applications.git'
+      targetRevision: production
+      project: monitoring
