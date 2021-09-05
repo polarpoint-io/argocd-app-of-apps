@@ -1,29 +1,32 @@
-  {{- range .Values.applications }}
-    {{- if .enabled }}
-  ---
-  apiVersion: argoproj.io/v1alpha1
-  kind: Application
-  metadata:
-    {{- if .enableCascade }}
-    finalizers:
-      - resources-finalizer.argocd.argoproj.io
-    {{- end }}
-    name: {{ .name }}
-    namespace: {{ $.Values.global.namespace}}
-  spec:
-    source:
-      path: {{ .path }}
-      repoURL: {{ .url }}
-      targetRevision: {{ .targetRevision }}
-      helm:
-        valueFiles:
-          - values.yaml
-    project: {{ .project }}
-    destination:
-      server: {{ $.Values.global.defaultCluster }}
-    syncPolicy:
-      automated:
-        selfHeal: {{ $.Values.global.syncPolicy.automated.selfHeal }}
-        prune:   {{ $.Values.global.syncPolicy.automated.prune }}
-    {{- end }}
-  {{- end }}
+{{- range $proj := .Values.projects  }}
+{{- range $app := $proj.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  {{- if .enableCascade }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  {{- end }}    
+  name: {{ $app.name }}
+  namespace: {{ $.Values.global.namespace}}
+spec:
+  source:
+    path: {{ $app.path }}
+    repoURL: {{ $proj.url }}
+    targetRevision: {{ .targetRevision }}
+    helm:
+      valueFiles:
+        - values.yaml
+  project: {{ $proj.name }}          
+  destination: 
+    server: {{ $.Values.global.defaultCluster }}
+    namespace: {{ $app.namespace }}
+  syncPolicy:
+    automated:
+      selfHeal: {{ $.Values.global.syncPolicy.automated.selfHeal }}  
+      prune:   {{ $.Values.global.syncPolicy.automated.prune }}
+    syncOptions:
+    - CreateNamespace=true        
+{{- end }}
+{{- end }}

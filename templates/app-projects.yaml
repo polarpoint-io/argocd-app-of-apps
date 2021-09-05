@@ -1,0 +1,40 @@
+{{- range $proj := .Values.projects  }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:  
+  name: {{ $proj.name }}
+  namespace: {{ $.Values.global.namespace}}
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:          
+  - namespace: '*'
+    server: {{ $.Values.global.defaultCluster }}
+
+  roles:
+
+  - description: {{ $.Values.permissions.rw.description }}
+    groups:
+    {{- range $permission := $.Values.permissions.rw.groups }}
+    - {{ $permission }}
+    {{- end }}
+    name: write
+    policies:
+    - p, proj:{{ $proj.name}}:write, applications, *, {{ $proj.name}}/*, allow
+
+  - description: {{ $.Values.permissions.ro.description }}
+    groups:
+    {{- range $permission := $.Values.permissions.ro.groups }}
+    - {{ $permission }}
+    {{- end }}
+    name: read
+    policies:
+    - p, proj:{{ $proj.name}}:read, applications, get, {{ $proj.name}}/*, allow
+    - p, proj:{{ $proj.name}}:read, applications, sync, {{ $proj.name}}/*, allow
+
+
+  sourceRepos: 
+  - {{ $proj.url }}
+{{- end }}

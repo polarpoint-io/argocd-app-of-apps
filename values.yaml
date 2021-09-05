@@ -1,24 +1,68 @@
-   # Global configuration for all applications
-  # defaults and constants
-  # default cluster and namespace here is the argocd cluster and namespace
+# Global configuration for all applications
+# defaults and constants
+# default cluster and namespace here is the argocd cluster and namespace
 
-  global:
-    namespace: argocd
-    defaultCluster: https://kubernetes.default.svc
-    syncPolicy:
-      automated:
-        prune: false
-        selfHeal: false
-  projects:
-    default: default
-  # TODO argocd projects
+global:
+  namespace: argocd
+  defaultCluster: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
 
-  # applications with parameters
-  applications:
-    monitoring:
-      enabled: true
-      name: monitoring
-      path: applications
-      url: 'git@github.com:polarpoint-io/devops-argocd-monitoring-applications.git'
-      targetRevision: production
-      project: monitoring
+
+permissions:
+    rw:
+      description: "Read-Write Access"
+      groups:
+        - write
+    ro:
+      description: "Read-Only Access"
+      groups:
+        - read
+
+projects:
+    # foundational services   
+    - name: foundational
+      url: 'https://github.com/polarpoint-io/argocd-foundational-applications.git' 
+      applications: 
+        - name: prometheus
+          path: foundational/kube-prometheus-stack
+          targetRevision: master
+          namespace: monitoring
+        - name: external-secrets
+          path: foundational/kubernetes-external-secrets
+          namespace: default
+          targetRevision: master
+        - name: fluentd 
+          path: foundational/fluentd
+          targetRevision: master
+          namespace: monitoring
+    # applications and services
+    - name: applications 
+      url: 'https://github.com/polarpoint-io/argocd-tooling-applications.git'
+      applications:   
+      - name: jenkins
+        path: applications/jenkins
+        targetRevision: master
+        namespace: ci
+      - name: sonarqube
+        path: applications/sonarqube-lts
+        targetRevision: master
+        namespace: ci
+      - name: workflows
+        path: applications/argo-workflows
+        targetRevision: master
+        namespace: workflows
+      - name: artifact
+        path: applications/nexus-repository-manager
+        targetRevision: master
+        namespace: artifact
+      - name: auth
+        path: applications/keycloak
+        targetRevision: master
+        namespace: auth
+      - name: infrastructure
+        path: applications/atlantis
+        targetRevision: master
+        namespace: infrastructure
