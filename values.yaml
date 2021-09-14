@@ -28,15 +28,15 @@ projects:
       applications: 
         - name: prometheus
           path: foundational/kube-prometheus-stack
-          targetRevision: master
+          targetRevision: main
           namespace: monitoring
         - name: external-secrets
           path: foundational/kubernetes-external-secrets
           namespace: default
-          targetRevision: master
+          targetRevision: main
         - name: fluentd 
           path: foundational/fluentd
-          targetRevision: master
+          targetRevision: main
           namespace: monitoring
     # applications and services
     - name: applications 
@@ -44,25 +44,25 @@ projects:
       applications:   
       - name: jenkins
         path: applications/jenkins
-        targetRevision: master
+        targetRevision: main
         namespace: ci
       - name: sonarqube
         path: applications/sonarqube-lts
-        targetRevision: master
+        targetRevision: main
         namespace: ci
       - name: workflows
         path: applications/argo-workflows
-        targetRevision: master
+        targetRevision: main
         namespace: workflows
       - name: artifact
         path: applications/nexus-repository-manager
-        targetRevision: master
+        targetRevision: main
         namespace: artifact
       - name: auth
         path: applications/keycloak
-        targetRevision: master
+        targetRevision: main
         namespace: auth
       - name: infrastructure
         path: applications/atlantis
-        targetRevision: master
+        targetRevision: main
         namespace: infrastructure
