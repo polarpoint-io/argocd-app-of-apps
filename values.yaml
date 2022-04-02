@@ -13,7 +13,7 @@ global:
 
 privateGitRepositories:
   - name: argocd-tooling-applications 
-    url: "https://github.com/polarpoint-io/argocd-tooling-applications.git"
+    url: "git@github.com:polarpoint-io/argocd-tooling-applications.git"
 
 
 publicHelmRepositories:
@@ -29,7 +29,7 @@ projects:
     - name: tooling
       urls:
       - name: argocd-tooling-applications 
-        url: 'git@github.com:pol-onesource/devops-argocd-tooling-applications.git'
+        url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
       - name: argocd-crossplane-repo
         url: "https://charts.crossplane.io/stable"
       - name: argocd-dependency-track-repo
@@ -51,7 +51,7 @@ projects:
 
       applications:
       - name: tooling-argocd-applications
-        url: 'https://github.com/polarpoint-io/argocd-tooling-applications.git'
+        url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
         path: releases
         targetRevision: main
         valuesFile: "values.yaml"
