@@ -13,20 +13,30 @@ metadata:
 spec:
   source:
     path: {{ $app.path }}
-    repoURL: {{ $proj.url }}
+    repoURL: {{ $app.url }}
     targetRevision: {{ .targetRevision }}
+{{- if .directory }}
+    directory:
+      recurse: {{ .recurseDirectory | default "false" }}
+{{- else }}
     helm:
       valueFiles:
-        - values.yaml
+        - {{ .valuesFile | default "values.yaml" }}
+{{- end }}
   project: {{ $proj.name }}          
   destination: 
-    server: {{ $.Values.global.defaultCluster }}
+    server: {{ .targetCluster | default $.Values.global.defaultCluster }}
     namespace: {{ $app.namespace }}
   syncPolicy:
     automated:
+{{- if .syncPolicy }}
+      selfHeal: {{ .syncPolicy.automated.selfHeal }}  
+      prune: {{ .syncPolicy.automated.prune }}
+{{- else }}
       selfHeal: {{ $.Values.global.syncPolicy.automated.selfHeal }}  
-      prune:   {{ $.Values.global.syncPolicy.automated.prune }}
+      prune: {{ $.Values.global.syncPolicy.automated.prune }}
+{{- end }}
     syncOptions:
-    - CreateNamespace=true        
+    - CreateNamespace=true
 {{- end }}
 {{- end }}

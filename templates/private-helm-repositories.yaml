@@ -1,0 +1,39 @@
+{{- range $repo := .Values.privateHelmRepositories  }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $repo.name }}-tpl
+  namespace: {{ $.Values.global.namespace}}
+data:
+  name: {{ $repo.name }}
+  url: {{ $repo.url }}
+  type: helm
+---
+apiVersion: external-secrets.io/v1alpha1
+kind: ExternalSecret
+metadata:
+  name: {{ $repo.name }}
+  namespace: {{ $.Values.global.namespace}}
+spec:
+  refreshInterval: 1m
+  secretStoreRef:
+    name: cluster-secrets-store
+    kind: ClusterSecretStore
+  target:
+    name: {{ $repo.name }}
+    template:
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      templateFrom:
+      - configMap:
+          # name of the configmap to pull in
+          name: {{ $repo.name }}-tpl
+          # here you define the keys that should be used as template
+          items:
+          - key: name
+          - key: url
+          - key: type
+
+{{- end }}

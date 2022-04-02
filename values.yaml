@@ -3,7 +3,7 @@
 # default cluster and namespace here is the argocd cluster and namespace
 
 global:
-  namespace: argocd
+  namespace: cd
   defaultCluster: https://kubernetes.default.svc
   syncPolicy:
     automated:
@@ -11,58 +11,48 @@ global:
       selfHeal: true
 
 
-permissions:
-    rw:
-      description: "Read-Write Access"
-      groups:
-        - write
-    ro:
-      description: "Read-Only Access"
-      groups:
-        - read
+privateGitRepositories:
+  - name: argocd-tooling-applications 
+    url: "https://github.com/polarpoint-io/argocd-tooling-applications.git"
+
+
+publicHelmRepositories:
+  - name: argocd-bitnami-repo
+    url: "https://charts.bitnami.com/bitnami"
+  - name: argocd-crossplane-repo
+    url: "https://charts.crossplane.io/stable"
+  - name: argocd-dependency-track-repo
+    url: "https://evryfs.github.io/helm-charts/"
 
 projects:
-    # foundational services   
-    - name: foundational
-      url: 'https://github.com/polarpoint-io/argocd-foundational-applications.git' 
-      applications: 
-        - name: prometheus
-          path: foundational/kube-prometheus-stack
-          targetRevision: main
-          namespace: monitoring
-        - name: external-secrets
-          path: foundational/kubernetes-external-secrets
-          namespace: default
-          targetRevision: main
-        - name: fluentd 
-          path: foundational/fluentd
-          targetRevision: main
-          namespace: monitoring
-    # applications and services
-    - name: applications 
-      url: 'https://github.com/polarpoint-io/argocd-tooling-applications.git'
-      applications:   
-      - name: jenkins
-        path: applications/jenkins
+   # applications and services
+    - name: tooling
+      urls:
+      - name: argocd-tooling-applications 
+        url: 'git@github.com:pol-onesource/devops-argocd-tooling-applications.git'
+      - name: argocd-crossplane-repo
+        url: "https://charts.crossplane.io/stable"
+      - name: argocd-dependency-track-repo
+        url: "https://evryfs.github.io/helm-charts/"
+
+      permissions:
+          rw:
+            description: "Read-Write Access"
+            groups:
+              - TOOLING-RW
+          ro:
+            description: "Read-Only Access"
+            groups:
+              - TOOLING-RO
+      destinations:
+      - name: default
+        namespace: '*'
+        server: https://kubernetes.default.svc
+
+      applications:
+      - name: tooling-argocd-applications
+        url: 'https://github.com/polarpoint-io/argocd-tooling-applications.git'
+        path: releases
         targetRevision: main
-        namespace: ci
-      - name: sonarqube
-        path: applications/sonarqube-lts
-        targetRevision: main
-        namespace: ci
-      - name: workflows
-        path: applications/argo-workflows
-        targetRevision: main
-        namespace: workflows
-      - name: artifact
-        path: applications/nexus-repository-manager
-        targetRevision: main
-        namespace: artifact
-      - name: auth
-        path: applications/keycloak
-        targetRevision: main
-        namespace: auth
-      - name: infrastructure
-        path: applications/atlantis
-        targetRevision: main
-        namespace: infrastructure
+        valuesFile: "values.yaml"
+  

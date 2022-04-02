@@ -1,0 +1,14 @@
+{{- range $repo := .Values.publicHelmRepositories  }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $repo.name }}
+  namespace: {{ $.Values.global.namespace}}
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: {{ $repo.url }}
+  name: {{ $repo.name }}
+  type: helm
+{{- end }}
