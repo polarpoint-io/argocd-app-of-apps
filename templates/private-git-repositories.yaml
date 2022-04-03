@@ -34,7 +34,7 @@ spec:
           - key: url
           - key: type
   data:
-    - secretKey: sshPrivateKey
+    - secretKey: github-ssh
       remoteRef:
-        key: service/github/privateKey
+        key: github-ssh
 {{- end }}
