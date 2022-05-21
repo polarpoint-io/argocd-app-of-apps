@@ -1,1 +1,1 @@
-# devops-argocd-app-of-apps
+# argocd-app-of-apps
