@@ -14,7 +14,8 @@ global:
 privateGitRepositories:
   - name: argocd-tooling-applications 
     url: "git@github.com:polarpoint-io/argocd-tooling-applications.git"
-
+  - name: argocd-foundational-applications 
+    url: "git@github.com:polarpoint-io/argocd-foundational-applications.git"
 
 publicHelmRepositories:
   - name: argocd-bitnami-repo
