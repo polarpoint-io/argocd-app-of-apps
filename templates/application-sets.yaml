@@ -36,7 +36,6 @@ spec:
         server: >-
           {{ printf "{{ url }}" }}
         namespace: {{ $apps.namespace }}
-        path: {{ $proj.name }}
 {{- end }}
 {{- end }}
 {{- end }}
