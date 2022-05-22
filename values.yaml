@@ -30,6 +30,13 @@ projects:
       # applications and services to all clusters
       # foundational, security and observational services
     - name: foundational
+      urls:
+      - name: argocd-foundational-applications 
+        url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
+      - name: argocd-crossplane-repo
+        url: "https://charts.crossplane.io/stable"
+      - name: argocd-sysdig-falco-repo
+        url: "https://falcosecurity.github.io/charts"
       permissions:
           rw:
             description: "Read-Write Access"
