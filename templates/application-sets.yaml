@@ -17,8 +17,9 @@ spec:
   template:
     metadata:
       name: >-
-        {{ printf "{{ cluster }}" }}'-{{ $apps.name }}'
+        {{ printf "{{ cluster }}" }}-{{ $apps.name }}
     spec:
+      project: {{ $proj.name }}
       source:
         path: {{ $apps.path }}
         repoURL: {{ $apps.url }}
