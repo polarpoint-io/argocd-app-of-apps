@@ -49,7 +49,7 @@ projects:
       applicationSets:
         destinations:
         - name: default
-          namespace: 'observability'
+          namespace: '*'
           server: https://kubernetes.default.svc
         applications:
         - name: kuberhealthy
