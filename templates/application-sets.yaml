@@ -1,0 +1,41 @@
+{{- range $proj := .Values.projects }}
+{{- if $proj.applicationSets }}
+{{- range $apps := $proj.applicationSets.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ $proj.name }}
+spec:
+  generators:
+  - list:
+      elements:
+      {{- range $dest := $proj.applicationSets.destinations }}
+      - cluster: {{ $dest.name }}
+        url: {{ $dest.server }}
+      {{- end }}
+  template:
+    metadata:
+      name: >-
+        {{ printf "{{ cluster }}" }}'-{{ $apps.name }}'
+    spec:
+      source:
+        path: {{ $apps.path }}
+        repoURL: {{ $apps.url }}
+        targetRevision: {{ .targetRevision }}
+    {{- if .directory }}
+        directory:
+          recurse: {{ .recurseDirectory | default "false" }}
+    {{- else }}
+        helm:
+          valueFiles:
+            - {{ .valuesFile | default "values.yaml" }}
+    {{- end }}
+      destination:
+        server: >-
+          {{ printf "{{ url }}" }}
+        namespace: {{ $apps.namespace }}
+        path: {{ $proj.name }}
+{{- end }}
+{{- end }}
+{{- end }}

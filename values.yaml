@@ -25,6 +25,33 @@ publicHelmRepositories:
     url: "https://evryfs.github.io/helm-charts/"
 
 projects:
+
+      # ApplicationSet generator to apply
+      # applications and services to all clusters
+      # foundational, security and observational services
+    - name: foundational
+      permissions:
+          rw:
+            description: "Read-Write Access"
+            groups:
+              - FOUNDATIONAL-RW
+          ro:
+            description: "Read-Only Access"
+            groups:
+              - FOUNDATIONAL-RO
+      applicationSets:
+        destinations:
+        - name: default
+          namespace: 'observability'
+          server: https://kubernetes.default.svc
+        applications:
+        - name: kuberhealthy
+          url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
+          path: releases/apps/observability/kuberhealthy/non-prod
+          targetRevision: HEAD
+          namespace: observability
+          valuesFile: "values.yaml"
+
    # applications and services
     - name: tooling
       urls:
