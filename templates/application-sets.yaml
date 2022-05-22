@@ -5,7 +5,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ $proj.name }}
+  name: {{ $apps.name }}-appset
 spec:
   generators:
   - list:
