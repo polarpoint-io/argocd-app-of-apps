@@ -49,7 +49,7 @@ projects:
               - FOUNDATIONAL-RO
       applicationSets:
         destinations:
-        - name: default
+        - name: deploy
           namespace: '*'
           server: https://kubernetes.default.svc
         applications:
