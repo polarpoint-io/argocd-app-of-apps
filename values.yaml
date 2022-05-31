@@ -34,8 +34,6 @@ projects:
       urls:
       - name: argocd-foundational-applications 
         url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-      - name: argocd-crossplane-repo
-        url: "https://charts.crossplane.io/stable"
       - name: argocd-sysdig-falco-repo
         url: "https://falcosecurity.github.io/charts"
       permissions:
@@ -58,6 +56,12 @@ projects:
           path: releases/apps/foundational/cert-manager/non-prod
           targetRevision: HEAD
           namespace: foundational
+          valuesFile: "values.yaml"
+        - name: kuberhealthy
+          url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
+          path: releases/apps/observability/kuberhealthy/non-prod
+          targetRevision: HEAD
+          namespace: observability
           valuesFile: "values.yaml"
         - name: kuberhealthy
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
