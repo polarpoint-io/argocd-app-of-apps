@@ -63,11 +63,11 @@ projects:
           targetRevision: HEAD
           namespace: observability
           valuesFile: "values.yaml"
-        - name: kuberhealthy
+        - name: linkerd
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/observability/kuberhealthy/non-prod
+          path: releases/apps/foundational/linkerd/non-prod
           targetRevision: HEAD
-          namespace: observability
+          namespace: foundational
           valuesFile: "values.yaml"
 
    # applications and services
