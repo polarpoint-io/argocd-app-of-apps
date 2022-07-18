@@ -20,6 +20,8 @@ privateGitRepositories:
 publicHelmRepositories:
   - name: argocd-bitnami-repo
     url: "https://charts.bitnami.com/bitnami"
+  - name: argocd-argo-repo
+    url: https://argoproj.github.io/argo-helm
   - name: argocd-crossplane-repo
     url: "https://charts.crossplane.io/stable"
   - name: argocd-dependency-track-repo
@@ -95,7 +97,8 @@ projects:
         url: "https://evryfs.github.io/helm-charts/"
       - name: backstage-repo
         url:  "https://vinzscam.github.io/backstage-chart"
-
+      - name: argocd-argo-repo
+        url: https://argoproj.github.io/argo-helm
       permissions:
           rw:
             description: "Read-Write Access"
