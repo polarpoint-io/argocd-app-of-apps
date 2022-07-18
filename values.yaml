@@ -24,6 +24,8 @@ publicHelmRepositories:
     url: "https://charts.crossplane.io/stable"
   - name: argocd-dependency-track-repo
     url: "https://evryfs.github.io/helm-charts/"
+  - name: backstage-repo
+    url:  "https://vinzscam.github.io/backstage-chart"
 
 projects:
 
@@ -53,31 +55,31 @@ projects:
         applications:
         - name: prometheus
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/foundational/kube-prometheus-stack/non-prod
+          path: releases/apps/foundational/kube-prometheus-stack
           targetRevision: HEAD
           namespace: observability
           valuesFile: "values.yaml"
         - name: certmanager
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/foundational/cert-manager/non-prod
+          path: releases/apps/foundational/cert-manager
           targetRevision: HEAD
           namespace: foundational
           valuesFile: "values.yaml"
         - name: kuberhealthy
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/observability/kuberhealthy/non-prod
+          path: releases/apps/observability/kuberhealthy
           targetRevision: HEAD
           namespace: observability
           valuesFile: "values.yaml"
         - name: linkerd
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/foundational/linkerd/non-prod
+          path: releases/apps/foundational/linkerd
           targetRevision: HEAD
           namespace: foundational
           valuesFile: "values.yaml"
         - name: falco
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/security/falco/non-prod
+          path: releases/apps/security/sysdig-falco
           targetRevision: HEAD
           namespace: security
           valuesFile: "values.yaml"
@@ -91,6 +93,8 @@ projects:
         url: "https://charts.crossplane.io/stable"
       - name: argocd-dependency-track-repo
         url: "https://evryfs.github.io/helm-charts/"
+      - name: backstage-repo
+        url:  "https://vinzscam.github.io/backstage-chart"
 
       permissions:
           rw:
