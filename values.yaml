@@ -57,7 +57,7 @@ projects:
         applications:
         - name: prometheus
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
-          path: releases/apps/foundational/kube-prometheus-stack
+          path: releases/apps/observability/kube-prometheus-stack
           targetRevision: HEAD
           namespace: observability
           valuesFile: "values.yaml"
@@ -89,7 +89,7 @@ projects:
    # applications and services
     - name: tooling
       urls:
-      - name: argocd-tooling-applications 
+      - name: argocd-tooling-applications
         url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
       - name: argocd-crossplane-repo
         url: "https://charts.crossplane.io/stable"
