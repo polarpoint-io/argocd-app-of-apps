@@ -29,6 +29,7 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, override, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, delete, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, *, {{ $proj.name}}/*, allow
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, logs, *, {{ $proj.name}}/*, allow
 
   - description: {{ $proj.permissions.ro.description }}
     groups:
@@ -38,12 +39,12 @@ spec:
     name: {{ $proj.name}}-ro
     policies:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, get, {{ $proj.name}}/*, allow
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, logs, get, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, sync, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, create, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, update, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, override, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, delete, {{ $proj.name}}/*, deny
-
   sourceRepos: 
   {{- range $urls := $proj.urls }}
   - {{ $urls.url }}

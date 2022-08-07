@@ -5,7 +5,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ $apps.name }}-appset
+  name: {{ $apps.name }}-{{ $proj.name }}
 spec:
   generators:
   - list:
@@ -20,6 +20,9 @@ spec:
         {{ printf "{{ cluster }}" }}-{{ $apps.name }}
     spec:
       project: {{ $proj.name }}
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
       source:
         path: {{ $apps.path }}
         repoURL: {{ $apps.url }}
