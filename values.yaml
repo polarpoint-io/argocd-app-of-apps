@@ -28,6 +28,8 @@ publicHelmRepositories:
     url: "https://evryfs.github.io/helm-charts/"
   - name: backstage-repo
     url:  "https://vinzscam.github.io/backstage-chart"
+  - name: sonarqube-repo
+    url: https://SonarSource.github.io/helm-chart-sonarqube
 
 projects:
 
@@ -99,6 +101,8 @@ projects:
         url:  "https://vinzscam.github.io/backstage-chart"
       - name: argocd-argo-repo
         url: https://argoproj.github.io/argo-helm
+      - name: sonarqube-repo
+        url: https://SonarSource.github.io/helm-chart-sonarqube
       permissions:
           rw:
             description: "Read-Write Access"
