@@ -30,6 +30,8 @@ publicHelmRepositories:
     url:  "https://vinzscam.github.io/backstage-chart"
   - name: sonarqube-repo
     url: https://SonarSource.github.io/helm-chart-sonarqube
+  - name: jenkins
+    url: https://charts.jenkins.io 
 
 projects:
 
@@ -103,6 +105,8 @@ projects:
         url: https://argoproj.github.io/argo-helm
       - name: sonarqube-repo
         url: https://SonarSource.github.io/helm-chart-sonarqube
+      - name: jenkins
+        url: https://charts.jenkins.io 
       permissions:
           rw:
             description: "Read-Write Access"
