@@ -106,7 +106,9 @@ projects:
       - name: sonarqube-repo
         url: https://SonarSource.github.io/helm-chart-sonarqube
       - name: jenkins
-        url: https://charts.jenkins.io 
+        url: https://charts.jenkins.io
+      - name: argo-workflows-library
+        url: 'git@github.com:polarpoint-io/argow-template-library.git'
       permissions:
           rw:
             description: "Read-Write Access"
