@@ -9,8 +9,10 @@ data:
   name: {{ $repo.name }}
   url: {{ $repo.url }}
   type: helm
+  username: "{{`{{.username | toString}}`}}"
+  password: "{{`{{.password | toString}}`}}"
 ---
-apiVersion: external-secrets.io/v1alpha1
+apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: {{ $repo.name }}
@@ -35,5 +37,16 @@ spec:
           - key: name
           - key: url
           - key: type
+          - key: username
+          - key: password
 
+  data:
+    - secretKey: password
+      remoteRef:
+        key: service/harbor/chart-user
+        property: password
+    - secretKey: username
+      remoteRef:
+        key: service/harbor/chart-user
+        property: username
 {{- end }}

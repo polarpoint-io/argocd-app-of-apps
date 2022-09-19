@@ -8,6 +8,7 @@ metadata:
 data:
   url: {{ $repo.url }}
   type: git
+  sshPrivateKey: "{{`{{.sshPrivateKey | toString}}`}}"
 ---
 apiVersion: external-secrets.io/v1alpha1
 kind: ExternalSecret
@@ -33,6 +34,7 @@ spec:
           items:
           - key: url
           - key: type
+          - key: sshPrivateKey
   data:
     - secretKey: sshPrivateKey
       remoteRef:
