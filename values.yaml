@@ -133,7 +133,7 @@ projects:
         valuesFile: "values.yaml"
 
 # argo workflows template library
-      - name: argo-workflows-library
+      - name: argow-template-library
         url: 'git@github.com:polarpoint-io/argow-template-library.git'
         path: releases/apps/workflows
         targetRevision: main
