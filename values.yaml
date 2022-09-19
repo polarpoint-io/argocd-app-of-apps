@@ -17,7 +17,7 @@ privateGitRepositories:
   - name: argocd-foundational-applications 
     url: "git@github.com:polarpoint-io/argocd-foundational-applications.git"
   - name: argo-workflows-library
-    url: 'git@github.com:polarpoint-io/argow-template-library.git'
+    url: "git@github.com:polarpoint-io/argow-template-library.git"
 
 publicHelmRepositories:
   - name: argocd-bitnami-repo
@@ -134,7 +134,7 @@ projects:
 
 # argo workflows template library
       - name: argow-template-library
-        url: 'ssh://git@github.com:polarpoint-io/argow-template-library.git'
+        url: 'git@github.com:polarpoint-io/argow-template-library.git'
         path: releases/apps/workflows
         targetRevision: main
         directory:
