@@ -134,13 +134,9 @@ projects:
 
 # argo workflows template library
       - name: argo-workflows-library
-        url: git@github.com:polarpoint-io/argow-template-library
+        url: 'git@github.com:polarpoint-io/argow-template-library.git'
         path: releases/apps/workflows
         targetRevision: main
         directory:
-          recurseDirectory: true
-        syncPolicy:
-          automated:
-            prune: true
-            selfHeal: true
+          recurseDirectory: false
   
