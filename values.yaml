@@ -16,6 +16,8 @@ privateGitRepositories:
     url: "git@github.com:polarpoint-io/argocd-tooling-applications.git"
   - name: argocd-foundational-applications 
     url: "git@github.com:polarpoint-io/argocd-foundational-applications.git"
+  - name: argo-workflows-library
+    url: 'git@github.com:polarpoint-io/argow-template-library.git'
 
 publicHelmRepositories:
   - name: argocd-bitnami-repo
