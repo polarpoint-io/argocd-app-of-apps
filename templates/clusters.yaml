@@ -1,0 +1,56 @@
+{{- range $cluster := .Values.clusters  }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $cluster.name }}-cluster-tpl
+data:
+  name: {{ $cluster.name }}
+  server: {{ $cluster.url }}
+  config: |
+    {
+      "bearerToken": "{{`{{.bearerToken | toString}}`}}",
+      "tlsClientConfig": {
+        "serverName": "{{ $cluster.url }}",
+        "ca": "{{`{{.ca | toString}}`}}",
+        "insecure": true
+      }
+    }
+---
+apiVersion: external-secrets.io/v1alpha1
+kind: ExternalSecret
+metadata:
+  name: {{ $cluster.name }}-cluster
+  namespace: {{ $.Values.global.namespace}}
+spec:
+  refreshInterval: 1m0s
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore
+  target:
+    name: {{ $cluster.name }}-cluster-secret
+    template:
+      metadata:
+        labels:
+          argocd.argoproj.io/secret-type: "cluster"
+      templateFrom:
+      - configMap:
+          # name of the configmap to pull in
+          name: {{ $cluster.name }}-cluster-tpl
+          # here you define the keys that should be used as template
+          items:
+          - key: name
+          - key: server
+          - key: config
+
+  data:
+    - secretKey: bearerToken
+      remoteRef:
+        key: argocd
+        property: argocd-manager-bearer-{{ $cluster.name }}
+    - secretKey: ca
+      remoteRef:
+        key: argocd
+        property: argocd-manager-ca-{{ $cluster.name }}
+
+{{- end }}
