@@ -16,8 +16,8 @@ docker run --rm --volume "$(pwd):/helm-docs" -u $(id -u) jnorwood/helm-docs:late
 ## Installation
 
 ```console
-$ helm repo add argo https://argoproj.github.io/argo-helm
-$ helm install my-release argo/argocd-apps
+$ helm repo add polarpoint https://polarpoint-io.github.io/polarpoint-helm
+$ helm install my-release polarpoint/argocd-apps
 ```
 
 ## Values
