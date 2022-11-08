@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       name: >-
-        {{ printf "{{ cluster }}" }}-{{ $apps.name }}
+        {{printf "{{cluster}}" }}-{{ $apps.name }}
     spec:
       project: {{ $proj.name }}
       syncPolicy:
@@ -37,7 +37,7 @@ spec:
     {{- end }}
       destination:
         server: >-
-          {{ printf "{{ url }}" }}
+          {{ printf "{{url}}" }}
         namespace: {{ $apps.namespace }}
 {{- end }}
 {{- end }}

@@ -12,6 +12,8 @@ global:
 
 
 privateGitRepositories:
+  - name: argocd-config
+    url: git@github.com:polarpoint-io/argocd-app-of-apps.git
   - name: argocd-tooling-applications 
     url: "git@github.com:polarpoint-io/argocd-tooling-applications.git"
   - name: argocd-foundational-applications 
@@ -35,7 +37,44 @@ publicHelmRepositories:
   - name: jenkins
     url: https://charts.jenkins.io 
 
+
+clusters:
+ - name: artifacts
+   url: "https://artifacts-api.polarpoint.io:6443"
+ - name: tooling
+   url: "https://tooling-api.polarpoint.io:6443"
+ - name: monitoring
+   url: "https://monitoring-api.polarpoint.io:6443"
+
+# root application argocd-app-of-apps
 projects:
+    - name: argocd-config
+      urls:
+      - name: argocd-config
+        url: 'git@github.com:polarpoint-io/argocd-app-of-apps.git'
+        path: ./
+      permissions:
+          rw:
+            description: "Read-Write Access"
+            groups:
+              - ARGOCD-CONFIG-RW
+          ro:
+            description: "Read-Only Access"
+            groups:
+              - ARGOCD-CONFIG-RO
+          namespace: argocd
+      destinations:
+      - name: default
+        namespace: '*'
+        server: https://kubernetes.default.svc
+
+      applications:
+      - name: argocd-config
+        url: 'git@github.com:polarpoint-io/argocd-app-of-apps.git'
+        path: ./
+        targetRevision: main
+        valuesFile: "values.yaml"
+
 
       # ApplicationSet generator to apply
       # applications and services to all clusters
