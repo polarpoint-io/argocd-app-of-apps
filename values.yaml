@@ -39,6 +39,9 @@ publicHelmRepositories:
 
 
 clusters:
+
+ - name: deploy
+   url: https://kubernetes.default.svc
  - name: artifacts
    url: "https://artifacts-api.polarpoint.io:6443"
  - name: tooling
@@ -94,6 +97,10 @@ projects:
             description: "Read-Only Access"
             groups:
               - FOUNDATIONAL-RO
+      destinations:
+      - name: deploy
+        namespace: '*'
+        server: https://kubernetes.default.svc
       applicationSets:
         destinations:
         - name: deploy
