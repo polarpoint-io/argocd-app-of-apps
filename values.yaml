@@ -2,6 +2,9 @@
 # defaults and constants
 # default cluster and namespace here is the argocd cluster and namespace
 
+nameOverride: ""
+fullnameOverride: ""
+
 global:
   namespace: cd
   defaultCluster: https://kubernetes.default.svc
@@ -31,11 +34,12 @@ publicHelmRepositories:
   - name: argocd-dependency-track-repo
     url: "https://evryfs.github.io/helm-charts/"
   - name: backstage-repo
-    url:  "https://vinzscam.github.io/backstage-chart"
+    url:  "https://polarpoint-io.github.io/charts"
   - name: sonarqube-repo
     url: https://SonarSource.github.io/helm-chart-sonarqube
   - name: jenkins
-    url: https://charts.jenkins.io 
+    url: https://charts.jenkins.io
+
 
 
 clusters:
@@ -148,7 +152,7 @@ projects:
       - name: argocd-dependency-track-repo
         url: "https://evryfs.github.io/helm-charts/"
       - name: backstage-repo
-        url:  "https://vinzscam.github.io/backstage-chart"
+        url:  "https://polarpoint-io.github.io/charts"
       - name: argocd-argo-repo
         url: https://argoproj.github.io/argo-helm
       - name: sonarqube-repo
