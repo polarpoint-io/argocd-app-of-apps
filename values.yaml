@@ -61,6 +61,10 @@ projects:
         url: 'git@github.com:polarpoint-io/argocd-app-of-apps.git'
         path: ./
       permissions:
+          admin:
+            description: "Admin Access"
+            groups:
+              - ARGOCD-CONFIG-ADMIN
           rw:
             description: "Read-Write Access"
             groups:
@@ -93,6 +97,10 @@ projects:
       - name: argocd-sysdig-falco-repo
         url: "https://falcosecurity.github.io/charts"
       permissions:
+          admin:
+            description: "Admin Access"
+            groups:
+              - FOUNDATIONAL-ADMIN
           rw:
             description: "Read-Write Access"
             groups:
@@ -162,6 +170,10 @@ projects:
       - name: argo-workflows-library
         url: 'git@github.com:polarpoint-io/argow-template-library.git'
       permissions:
+          admin:
+            description: "Admin Access"
+            groups:
+              - TOOLING-ADMIN
           rw:
             description: "Read-Write Access"
             groups:
