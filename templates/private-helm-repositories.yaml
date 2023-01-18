@@ -6,7 +6,6 @@ metadata:
   name: {{ $repo.name }}-tpl
   namespace: {{ $.Values.global.namespace}}
 data:
-  name: {{ $repo.name }}
   url: {{ $repo.url }}
   type: helm
   username: "{{`{{.username | toString}}`}}"
@@ -15,38 +14,36 @@ data:
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: {{ $repo.name }}
+  name: {{ $repo.name }}-private-repo
   namespace: {{ $.Values.global.namespace}}
 spec:
-  refreshInterval: 1m0s
+  refreshInterval: 1m
   secretStoreRef:
     name: cluster-secrets-store
     kind: ClusterSecretStore
   target:
-    name: {{ $repo.name }}
+    name: {{ $repo.name }}-private-repo
     template:
       metadata:
         labels:
-          argocd.argoproj.io/secret-type: repository
+          argocd.argoproj.io/secret-type: "repository"
       templateFrom:
       - configMap:
           # name of the configmap to pull in
           name: {{ $repo.name }}-tpl
           # here you define the keys that should be used as template
           items:
-          - key: name
           - key: url
           - key: type
           - key: username
           - key: password
-
   data:
-    - secretKey: password
-      remoteRef:
-        key: service/harbor/chart-user
-        property: password
     - secretKey: username
       remoteRef:
-        key: service/harbor/chart-user
-        property: username
+        key: argocd
+        property: argocd-repository-{{ $repo.name }}-username
+    - secretKey: password
+      remoteRef:
+        key: argocd
+        property: argocd-repository-{{ $repo.name }}-token
 {{- end }}

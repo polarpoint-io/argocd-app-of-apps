@@ -21,7 +21,11 @@ spec:
 {{- else }}
     helm:
       valueFiles:
+        {{- if .valuesFiles }}
+          {{- toYaml .valuesFiles | nindent 10 }}
+        {{- else }}
         - {{ .valuesFile | default "values.yaml" }}
+        {{- end }}
 {{- end }}
   project: {{ $proj.name }}          
   destination: 

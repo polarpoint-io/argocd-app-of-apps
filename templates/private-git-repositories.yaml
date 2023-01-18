@@ -3,17 +3,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $repo.name }}-tpl
+  name: {{ $repo.name }}-repo-tpl
   namespace: {{ $.Values.global.namespace}}
 data:
   url: {{ $repo.url }}
   type: git
   sshPrivateKey: "{{`{{.sshPrivateKey | toString}}`}}"
 ---
-apiVersion: external-secrets.io/v1alpha1
+apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: {{ $repo.name }}
+  name: {{ $repo.name }}-private-repo
   namespace: {{ $.Values.global.namespace}}
 spec:
   refreshInterval: 1m0s
@@ -21,7 +21,7 @@ spec:
     name: cluster-secrets-store
     kind: ClusterSecretStore
   target:
-    name: {{ $repo.name }}
+    name: {{ $repo.name }}-private-repo
     template:
       metadata:
         labels:
@@ -29,14 +29,16 @@ spec:
       templateFrom:
       - configMap:
           # name of the configmap to pull in
-          name: {{ $repo.name }}-tpl
+          name: {{ $repo.name }}-repo-tpl
           # here you define the keys that should be used as template
           items:
           - key: url
           - key: type
           - key: sshPrivateKey
+
   data:
     - secretKey: sshPrivateKey
       remoteRef:
-        key: github-ssh
+        key: github-credentials
+        property: github-ssh-access-private-key
 {{- end }}

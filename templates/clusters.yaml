@@ -1,10 +1,27 @@
 {{- range $cluster := .Values.clusters  }}
+{{- $localConfig := "{\"bearerToken\":\"\",\"tlsClientConfig\":{\"insecure\":false,\"caData\":\"\"}}" }}
+{{- if $cluster.local }}
+# local cluster.
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ $cluster.name }}-cluster-secret-local
+  labels:
+    argocd.argoproj.io/secret-type: "cluster"
+    {{- toYaml $cluster.labels | nindent 4 }}
+data:
+  name: {{ $cluster.name | b64enc }}
+  server: {{ $cluster.url | b64enc }}
+  config: {{  $localConfig | b64enc  }}
+{{- else}}
+# other clusters.
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ $cluster.name }}-cluster-tpl
-  namespace: {{ $.Values.global.namespace}}
 data:
   name: {{ $cluster.name }}
   server: {{ $cluster.url }}
@@ -18,7 +35,7 @@ data:
       }
     }
 ---
-apiVersion: external-secrets.io/v1alpha1
+apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: {{ $cluster.name }}-cluster
@@ -34,6 +51,7 @@ spec:
       metadata:
         labels:
           argocd.argoproj.io/secret-type: "cluster"
+          {{- toYaml $cluster.labels | nindent 10 }}
       templateFrom:
       - configMap:
           # name of the configmap to pull in
@@ -54,4 +72,5 @@ spec:
         key: argocd
         property: argocd-manager-ca-{{ $cluster.name }}
 
+{{- end }}
 {{- end }}

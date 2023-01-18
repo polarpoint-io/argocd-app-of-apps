@@ -1,6 +1,6 @@
 apiVersion: v2
 name: argocd-apps-of-apps
-description: A Helm chart for managing Argo CD Projects, Applications, ApplicationSets, Clusters, Private CredentialsTemplates,PrivateGitRepositories,PublicHelmRepositories and PrivateHelmRepositories.
+description: A Helm chart for managing ArgoCD Projects, Applications, ApplicationSets, Clusters, Private CredentialsTemplates,PrivateGitRepositories,PublicHelmRepositories and PrivateHelmRepositories.
   Secrets managed by External Secrets Operator
 
 version: 0.1.1

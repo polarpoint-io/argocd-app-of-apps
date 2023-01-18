@@ -6,7 +6,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: {{ $apps.name }}-{{ $proj.name }}
-  namespace: {{ $.Values.global.namespace}}
 spec:
   generators:
   - list:
@@ -14,7 +13,15 @@ spec:
       {{- range $dest := $proj.applicationSets.destinations }}
       - cluster: {{ $dest.name }}
         url: {{ $dest.server }}
+        {{- range $k, $v := $dest.labels }}
+        {{ $k }}: {{ $v }}
+        {{- end }}
       {{- end }}
+  {{- if $apps.labels }}
+    selector:
+      matchLabels:
+        {{- toYaml $apps.labels | nindent 10 }}
+  {{- end }}
   template:
     metadata:
       name: >-

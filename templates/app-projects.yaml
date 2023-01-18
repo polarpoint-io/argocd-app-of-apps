@@ -62,7 +62,6 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, update, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, override, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, delete, {{ $proj.name}}/*, deny
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, logs, get, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, exec, create, */*, deny
   sourceRepos: 
   {{- range $urls := $proj.urls }}
