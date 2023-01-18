@@ -60,11 +60,19 @@ clusters:
 
  - name: deploy
    url: https://kubernetes.default.svc
+   labels:
+     role: controller
+     env: non-prod
  - name: tooling
    url: "https://192.168.11.80:6443"
+   labels:
+     role: worker
+     env: non-prod
  - name: observability
    url: "https://192.168.11.70:6443"
-
+   labels:
+     role: worker
+     env: non-prod
 # root application argocd-app-of-apps
 projects:
     - name: argocd-config
