@@ -16,7 +16,7 @@ metadata:
   name: {{ $repo.name }}-private-repo
   namespace: {{ $.Values.global.namespace}}
 spec:
-  refreshInterval: 1m0s
+  refreshInterval: 24h0m0s
   secretStoreRef:
     name: cluster-secrets-store
     kind: ClusterSecretStore
