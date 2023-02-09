@@ -44,7 +44,7 @@ metadata:
 spec:
   refreshInterval: 1m0s
   secretStoreRef:
-    name: vault-backend
+    name: cluster-secrets-store
     kind: ClusterSecretStore
   target:
     name: {{ $cluster.name }}-cluster-secret
