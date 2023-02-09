@@ -57,9 +57,9 @@ privateHelmRepositories:
     url: "registry.polarpoint.io/chart"
 
 clusters:
-
  - name: deploy
    url: https://kubernetes.default.svc
+   controller: true
    labels:
      role: controller
      env: non-prod

@@ -1,7 +1,8 @@
 {{- range $cluster := .Values.clusters  }}
 {{- $localConfig := "{\"bearerToken\":\"\",\"tlsClientConfig\":{\"insecure\":false,\"caData\":\"\"}}" }}
-{{- if $cluster.local }}
+{{- if $cluster.controller }}
 # Because we use cluster labels for scheduling ApplicationSets, we need to include the cluster running ArgoCD here.
+# with the controller tag in the values.yaml
 ---
 apiVersion: v1
 kind: Secret
