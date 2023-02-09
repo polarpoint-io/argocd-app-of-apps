@@ -171,10 +171,10 @@ projects:
           valuesFile: "values.yaml"
 
    # applications and services
-    - name: tooling
+    - name: deploy
       urls:
-      - name: argocd-tooling-applications
-        url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
+      - name: argocd-deploy-applications
+        url: 'git@github.com:polarpoint-io/argocd-deploy-applications.git'
       - name: argocd-crossplane-repo
         url: "https://charts.crossplane.io/stable"
       - name: argocd-dependency-track-repo
@@ -183,6 +183,35 @@ projects:
         url:  "https://polarpoint-io.github.io/charts"
       - name: argocd-argo-repo
         url: https://argoproj.github.io/argo-helm
+      permissions:
+          admin:
+            description: "Admin Access"
+            groups:
+              - DEPLOY-ADMIN
+          rw:
+            description: "Read-Write Access"
+            groups:
+              - DEPLOY-RW
+          ro:
+            description: "Read-Only Access"
+            groups:
+              - DEPLOY-RO
+      destinations:
+      - name: default
+        namespace: '*'
+        server: https://kubernetes.default.svc
+
+      applications:
+      - name: deploy-argocd-applications
+        url: 'git@github.com:polarpoint-io/argocd-deploy-applications.git'
+        path: releases
+        targetRevision: main
+        valuesFile: "values.yaml"
+  
+    - name: tooling
+      urls:
+      - name: argocd-tooling-applications
+        url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
       - name: sonarqube-repo
         url: https://SonarSource.github.io/helm-chart-sonarqube
       - name: jenkins
@@ -203,11 +232,16 @@ projects:
             groups:
               - TOOLING-RO
       destinations:
-      - name: default
+      - name: tooling
         namespace: '*'
-        server: https://kubernetes.default.svc
+        server: https://192.168.11.80:6443
 
       applications:
+      - name: deploy-argocd-applications
+        url: 'git@github.com:polarpoint-io/argocd-deploy-applications.git'
+        path: releases
+        targetRevision: main
+        valuesFile: "values.yaml"
       - name: tooling-argocd-applications
         url: 'git@github.com:polarpoint-io/argocd-tooling-applications.git'
         path: releases
