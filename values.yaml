@@ -104,8 +104,9 @@ projects:
         url: 'git@github.com:polarpoint-io/argocd-app-of-apps.git'
         path: ./
         targetRevision: main
-        valuesFile: "values.yaml"
-
+        valuesFiles:
+        - "values-non-prod.yaml"
+        - "values-argocd.yaml"
 
       # ApplicationSet generator to apply
       # applications and services to all clusters
