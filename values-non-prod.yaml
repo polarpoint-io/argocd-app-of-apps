@@ -216,19 +216,19 @@ projects:
         - name: prometheus
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
           path: releases/apps/observability/kube-prometheus-stack
-          targetRevision: HEAD
+          targetRevision: main
           namespace: observability
           valuesFile: "values.yaml"
         - name: certmanager
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
           path: releases/apps/foundational/cert-manager
-          targetRevision: HEAD
+          targetRevision: main
           namespace: foundational
           valuesFile: "values.yaml"
         - name: kuberhealthy
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
           path: releases/apps/observability/kuberhealthy
-          targetRevision: HEAD
+          targetRevision: main
           namespace: observability
           valuesFile: "values.yaml"
         # - name: linkerd
@@ -240,7 +240,7 @@ projects:
         - name: falco
           url: 'git@github.com:polarpoint-io/argocd-foundational-applications.git'
           path: releases/apps/security/sysdig-falco
-          targetRevision: HEAD
+          targetRevision: main
           namespace: security
           valuesFile: "values.yaml"
 
