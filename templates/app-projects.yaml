@@ -32,7 +32,7 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, clusters, get, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, clusters, *, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, logs, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, exec, create, */*, allow
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, exec, create, {{ $proj.name}}/*, allow
     {{- range $permission := $proj.permissions.rw.groups }}
     - {{ $permission }}
     {{- end }}
@@ -46,7 +46,7 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, delete, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, *, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, logs, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, exec, create, */*, allow
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, exec, create, {{ $proj.name}}/*, allow
 
   - description: {{ $proj.permissions.ro.description }}
     groups:
@@ -62,7 +62,7 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, update, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, override, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, delete, {{ $proj.name}}/*, deny
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, exec, create, */*, deny
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, exec, create, {{ $proj.name}}/*, deny
   sourceRepos: 
   {{- range $urls := $proj.urls }}
   - {{ $urls.url }}

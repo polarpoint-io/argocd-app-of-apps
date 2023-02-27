@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: cd
+spec:
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: "argo-cd"
+    targetRevision: "{{ .Values.argocd_chart_revision }}"
+    helm:
+      values: |
+        {{- toYaml .Values.argocd | nindent 8 }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cd
+  project: argocd-config

@@ -6,7 +6,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: {{ $apps.name }}-{{ $proj.name }}
-  namespace: {{ $.Values.global.namespace}}
 spec:
   generators:
   - list:
@@ -43,6 +42,10 @@ spec:
         helm:
           valueFiles:
             - {{ .valuesFile | default "values.yaml" }}
+      {{- if .parameters }}
+          parameters:
+            {{- toYaml .parameters | nindent 12 }}
+      {{- end }}
     {{- end }}
       destination:
         server: >-
