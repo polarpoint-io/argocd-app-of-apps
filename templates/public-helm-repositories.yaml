@@ -11,4 +11,7 @@ stringData:
   url: {{ $repo.url }}
   name: {{ $repo.name }}
   type: helm
+{{- if $repo.enableOCI }}
+  enableOCI: "true"
+{{- end }}
 {{- end }}
