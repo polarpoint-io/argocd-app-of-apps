@@ -1,11 +1,10 @@
 apiVersion: v2
-name: argocd-apps-of-apps
-description: A Helm chart for managing ArgoCD Projects, Applications, ApplicationSets, Clusters, Private CredentialsTemplates,PrivateGitRepositories,PublicHelmRepositories and PrivateHelmRepositories.
+name: argocd-app-of-apps
+description: A Helm chart for managing ArgoCD Projects, Applications, ApplicationSets, Clusters, Private CredentialsTemplates, PrivateGitRepositories, PublicHelmRepositories and PrivateHelmRepositories.
   Secrets managed by External Secrets Operator
-
-version: 0.1.1
+version: 1.10.0
 icon: https://polarpoint.io/wp-content/uploads/2016/10/cropped-699b9d455e40f96f1ed1a1dc145f2e72-png-1280x720-2-e1475433866461-1.png
-home: https://github.com/polarpoint-io/polarpoint-helm
+home: https://github.com/polarpoint-io/argocd-app-of-apps
 type: application
 keywords:
   - polarpoint
@@ -16,4 +15,3 @@ maintainers:
     url: https://polarpoint-io.github.io/
   - name: polarpoint
     url: https://polarpoint-io.github.io/
-

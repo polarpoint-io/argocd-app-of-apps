@@ -5,11 +5,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
+{{- if $apps.overrides }}
+  name: over-{{ $apps.name }}-{{ $proj.name }}
+{{- else }}
   name: {{ $apps.name }}-{{ $proj.name }}
+{{- end }}
 spec:
   generators:
   - list:
       elements:
+{{- if $apps.overrides }}
+      {{- range $dest := $proj.applicationSets.destinationOverrides }}
+      - cluster: {{ $dest.name }}
+        url: {{ $dest.server }}
+        {{- range $k, $v := $dest.labels }}
+        {{ $k }}: {{ $v }}
+        {{- end }}
+      {{- end }}
+{{- else }}
       {{- range $dest := $proj.applicationSets.destinations }}
       - cluster: {{ $dest.name }}
         url: {{ $dest.server }}
@@ -17,6 +30,7 @@ spec:
         {{ $k }}: {{ $v }}
         {{- end }}
       {{- end }}
+{{- end }}
   {{- if $apps.labels }}
     selector:
       matchLabels:
@@ -31,17 +45,30 @@ spec:
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
+        - ServerSideApply=true
+    {{- if $apps.ignoreDifferences }}
+      ignoreDifferences: {{- toYaml $apps.ignoreDifferences | nindent 6 }}
+    {{- end }}
       source:
         path: {{ $apps.path }}
         repoURL: {{ $apps.url }}
-        targetRevision: {{ .targetRevision }}
     {{- if .directory }}
+        targetRevision: {{ .targetRevision }}
         directory:
           recurse: {{ .recurseDirectory | default "false" }}
+    {{- end }}
+    {{- if not .directory }}
+    {{- if $apps.overrides }}
+        targetRevision: {{ .overrides.targetRevision }}
+        helm:
+          valueFiles:
+            - {{ .overrides.valuesFile }}
     {{- else }}
+        targetRevision: {{ .targetRevision }}
         helm:
           valueFiles:
             - {{ .valuesFile | default "values.yaml" }}
+    {{- end }}
       {{- if .parameters }}
           parameters:
             {{- toYaml .parameters | nindent 12 }}

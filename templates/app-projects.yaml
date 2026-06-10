@@ -2,7 +2,7 @@
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
-metadata:  
+metadata:
   name: {{ $proj.name }}
   namespace: {{ $.Values.global.namespace}}
 spec:
@@ -11,8 +11,8 @@ spec:
     kind: '*'
   destinations:
   {{- range $dest := $proj.destinations }}
-  - namespace: '{{ $dest.namespace }}'
-    server: {{ $dest.server }}
+  - namespace: {{ $dest.namespace | quote }}
+    server: {{ $dest.server | quote }}
   {{- end }}
   roles:
   - description: {{ $proj.permissions.admin.description }}
@@ -29,10 +29,8 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, applications, override, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, applications, delete, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, applications, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, clusters, get, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, clusters, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, logs, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-admin, exec, create, {{ $proj.name}}/*, allow
+  - description: {{ $proj.permissions.rw.description }}
+    groups:
     {{- range $permission := $proj.permissions.rw.groups }}
     - {{ $permission }}
     {{- end }}
@@ -45,7 +43,6 @@ spec:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, override, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, delete, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, applications, *, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, logs, *, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-rw, exec, create, {{ $proj.name}}/*, allow
 
   - description: {{ $proj.permissions.ro.description }}
@@ -56,15 +53,15 @@ spec:
     name: {{ $proj.name}}-ro
     policies:
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, get, {{ $proj.name}}/*, allow
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, logs, *, {{ $proj.name}}/*, allow
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, sync, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, create, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, update, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, override, {{ $proj.name}}/*, deny
     - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, applications, delete, {{ $proj.name}}/*, deny
-    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, exec, create, {{ $proj.name}}/*, deny
-  sourceRepos: 
-  {{- range $urls := $proj.urls }}
+    - p, proj:{{ $proj.name}}:{{ $proj.name}}-ro, exec, create, {{ $proj.name}}/*, allow
+
+  sourceRepos:
+  {{- range $urls := concat $.Values.global.defaultRepositories (default list $proj.urls ) }}
   - {{ $urls.url }}
   {{- end }}
 

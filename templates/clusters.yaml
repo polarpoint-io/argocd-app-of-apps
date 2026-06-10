@@ -1,15 +1,15 @@
 {{- range $cluster := .Values.clusters  }}
 {{- $localConfig := "{\"bearerToken\":\"\",\"tlsClientConfig\":{\"insecure\":false,\"caData\":\"\"}}" }}
-{{- if $cluster.controller }}
-# Because we use cluster labels for scheduling ApplicationSets, we need to include the cluster running ArgoCD here.
-# with the controller tag in the values.yaml
+{{- if $cluster.local }}
+# Because we use cluster labels for scheduling ApplicationSets, we need to include the local cluster here. See the following two links for more details:
+# https://github.com/argoproj/applicationset/issues/35#issuecomment-692120985
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster/#deploying-to-the-local-cluster
 ---
 apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
   name: {{ $cluster.name }}-cluster-secret-local
-  namespace: {{ $.Values.global.namespace}}
   labels:
     argocd.argoproj.io/secret-type: "cluster"
     {{- toYaml $cluster.labels | nindent 4 }}
@@ -23,7 +23,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ $cluster.name }}-cluster-tpl
-  namespace: {{ $.Values.global.namespace}}
 data:
   name: {{ $cluster.name }}
   server: {{ $cluster.url }}
@@ -45,7 +44,7 @@ metadata:
 spec:
   refreshInterval: 1m0s
   secretStoreRef:
-    name: cluster-secrets-store
+    name: vault-backend
     kind: ClusterSecretStore
   target:
     name: {{ $cluster.name }}-cluster-secret
@@ -67,12 +66,12 @@ spec:
   data:
     - secretKey: bearerToken
       remoteRef:
-        key: argocd
-        property: argocd-manager-bearer-{{ $cluster.name }}
+        key: argocd-credentials/{{ $cluster.name }}
+        property: bearer_token
     - secretKey: ca
       remoteRef:
-        key: argocd
-        property: argocd-manager-ca-{{ $cluster.name }}
+        key: argocd-credentials/{{ $cluster.name }}
+        property: ca_cert
 
 {{- end }}
 {{- end }}

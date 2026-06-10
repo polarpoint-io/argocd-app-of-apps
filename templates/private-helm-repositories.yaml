@@ -1,4 +1,4 @@
-{{- range $repo := .Values.privateHelmRepositories  }}
+{{- range $repo := .Values.privateOCIRepositories  }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -10,6 +10,8 @@ data:
   type: helm
   username: "{{`{{.username | toString}}`}}"
   password: "{{`{{.password | toString}}`}}"
+  enableOCI: "true"
+  ForceHttpBasicAuth: "true"
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
@@ -17,9 +19,9 @@ metadata:
   name: {{ $repo.name }}-private-repo
   namespace: {{ $.Values.global.namespace}}
 spec:
-  refreshInterval: 24h0m0s
+  refreshInterval: 1m
   secretStoreRef:
-    name: cluster-secrets-store
+    name: vault-backend
     kind: ClusterSecretStore
   target:
     name: {{ $repo.name }}-private-repo
@@ -37,6 +39,8 @@ spec:
           - key: type
           - key: username
           - key: password
+          - key: enableOCI
+          - key: ForceHttpBasicAuth
   data:
     - secretKey: username
       remoteRef:
