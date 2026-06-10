@@ -44,7 +44,7 @@ metadata:
 spec:
   refreshInterval: 1m0s
   secretStoreRef:
-    name: vault-backend
+    name: {{ (($.Values.global.secretStore).name) | default "cluster-secrets-store" }}
     kind: ClusterSecretStore
   target:
     name: {{ $cluster.name }}-cluster-secret
@@ -66,11 +66,11 @@ spec:
   data:
     - secretKey: bearerToken
       remoteRef:
-        key: argocd-credentials/{{ $cluster.name }}
+        key: argocd-credentials-{{ $cluster.name }}
         property: bearer_token
     - secretKey: ca
       remoteRef:
-        key: argocd-credentials/{{ $cluster.name }}
+        key: argocd-credentials-{{ $cluster.name }}
         property: ca_cert
 
 {{- end }}
