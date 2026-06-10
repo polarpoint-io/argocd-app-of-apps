@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/><stop offset="60%" stop-color="#16203a"/><stop offset="100%" stop-color="#1a1b26"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#bb9af7" stop-opacity="0"/><stop offset="50%" stop-color="#bb9af7" stop-opacity="0.85"/><stop offset="100%" stop-color="#bb9af7" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="280" fill="url(#bg)"/>
+  <g stroke="#ffffff" stroke-opacity="0.04"><line x1="0" y1="0" x2="0" y2="280"/><line x1="60" y1="0" x2="60" y2="280"/><line x1="120" y1="0" x2="120" y2="280"/><line x1="180" y1="0" x2="180" y2="280"/><line x1="240" y1="0" x2="240" y2="280"/><line x1="300" y1="0" x2="300" y2="280"/><line x1="360" y1="0" x2="360" y2="280"/><line x1="420" y1="0" x2="420" y2="280"/><line x1="480" y1="0" x2="480" y2="280"/><line x1="540" y1="0" x2="540" y2="280"/><line x1="600" y1="0" x2="600" y2="280"/><line x1="660" y1="0" x2="660" y2="280"/><line x1="720" y1="0" x2="720" y2="280"/><line x1="780" y1="0" x2="780" y2="280"/><line x1="840" y1="0" x2="840" y2="280"/><line x1="900" y1="0" x2="900" y2="280"/><line x1="960" y1="0" x2="960" y2="280"/><line x1="1020" y1="0" x2="1020" y2="280"/><line x1="1080" y1="0" x2="1080" y2="280"/><line x1="1140" y1="0" x2="1140" y2="280"/><line x1="1200" y1="0" x2="1200" y2="280"/><line x1="0" y1="0" x2="1200" y2="0"/><line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/></g>
+  <path d="M0,210 C300,140 500,250 700,180 S1050,120 1200,170" fill="none" stroke="url(#aurora)" stroke-width="3"/>
+  <path d="M0,235 C350,180 550,275 780,205 S1080,150 1200,200" fill="none" stroke="url(#aurora)" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="1060" cy="80" r="34" fill="none" stroke="#bb9af7" stroke-width="2" opacity="0.9"/>
+  <circle cx="1060" cy="80" r="50" fill="none" stroke="#bb9af7" stroke-width="1" opacity="0.35"/>
+  <circle cx="1060" cy="80" r="5" fill="#bb9af7"/>
+  <circle cx="1110" cy="52" r="4" fill="#bb9af7" opacity="0.7"/><circle cx="1014" cy="116" r="4" fill="#bb9af7" opacity="0.7"/>
+  <line x1="1064" y1="77" x2="1106" y2="55" stroke="#bb9af7" stroke-width="1" opacity="0.6"/>
+  <line x1="1056" y1="84" x2="1018" y2="113" stroke="#bb9af7" stroke-width="1" opacity="0.6"/>
+  <text x="64" y="120" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#e6edf3">argocd-app-of-apps</text>
+  <text x="64" y="162" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="21" fill="#9aa5ce">Projects · Applications · Clusters · Credentials</text>
+  <text x="64" y="226" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="14" letter-spacing="3" fill="#bb9af7">POLARPOINT.IO · GITOPS</text>
+</svg>
