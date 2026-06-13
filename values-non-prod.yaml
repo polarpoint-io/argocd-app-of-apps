@@ -56,6 +56,7 @@ environment: non-prod
 global:
   namespace: cd
   defaultCluster: https://kubernetes.default.svc
+  defaultRepositories: []
   syncPolicy:
     automated:
       prune: false
