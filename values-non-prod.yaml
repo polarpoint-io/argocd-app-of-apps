@@ -95,6 +95,8 @@ publicHelmRepositories:
     url: https://SonarSource.github.io/helm-chart-sonarqube
   - name: jenkins
     url: https://charts.jenkins.io
+  - name: temporal-repo
+    url: https://go.temporal.io/helm-charts/
 
 privateCredentialsTemplates:
 # private helm repositories that don't need credentials
@@ -292,6 +294,8 @@ projects:
         url: https://charts.jenkins.io
       - name: argo-workflows-library
         url: 'git@github.com:polarpoint-io/argow-template-library.git'
+      - name: temporal-repo
+        url: https://go.temporal.io/helm-charts/
       permissions:
           admin:
             description: "Admin Access"
